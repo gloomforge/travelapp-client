@@ -1,14 +1,19 @@
 import './Header.css';
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 function Header() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         setIsAuthenticated(!!token);
     }, []);
+
+    const handleLoginClick = () => {
+        navigate('/account/auth');
+    }
 
     return (
         <header className={'header'}>
@@ -37,7 +42,7 @@ function Header() {
                     {isAuthenticated ? (
                         <button className={'btn-outline'}>Logout</button>
                     ) : (
-                        <button className={'btn-outline'}>Login</button>
+                        <button className={'btn-outline'} onClick={handleLoginClick}>Login</button>
                     )}
                     <Link to={'/create'} className={'btn-primary'}>
                         Start your first journal
