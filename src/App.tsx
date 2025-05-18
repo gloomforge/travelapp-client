@@ -11,6 +11,7 @@ function App() {
             <Routes>
                 <Route path={'/'} element={<Home/>}/>
                 <Route path={'/account/auth'} element={<AuthPage/>}/>
+                <Route path={'/account/auth/:authMode'} element={<AuthPage/>}/>
                 <Route path={'*'} element={<NotFound/>}/>
             </Routes>
         </>

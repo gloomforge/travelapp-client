@@ -6,13 +6,27 @@ function Header() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem('authToken');
+    const checkAuthentication = () => {
+        const token = localStorage.getItem('token');
         setIsAuthenticated(!!token);
+    };
+
+    useEffect(() => {
+        checkAuthentication();
+        window.addEventListener('storage', checkAuthentication);
+        return () => {
+            window.removeEventListener('storage', checkAuthentication);
+        };
     }, []);
 
     const handleLoginClick = () => {
-        navigate('/account/auth');
+        navigate('/account/auth/login');
+    }
+
+    const handleLogoutClick = () => {
+        localStorage.removeItem('token');
+        setIsAuthenticated(false);
+        navigate('/');
     }
 
     return (
@@ -40,7 +54,7 @@ function Header() {
 
                 <div className={'header-actions'}>
                     {isAuthenticated ? (
-                        <button className={'btn-outline'}>Logout</button>
+                        <button className={'btn-outline'} onClick={handleLogoutClick}>Logout</button>
                     ) : (
                         <button className={'btn-outline'} onClick={handleLoginClick}>Login</button>
                     )}
