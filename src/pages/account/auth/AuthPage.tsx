@@ -1,36 +1,74 @@
 import './AuthPage.css';
-import { useState } from 'react';
-import TextBox from '../../../components/input/TextBox';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 function AuthPage() {
-    const [mode, setMode] = useState('login');
-    const toggleMode = () => setMode(prev => (prev === 'login' ? 'register' : 'login'));
+    const { authMode } = useParams<{ authMode?: string }>();
+    const navigate = useNavigate();
+    const currentMode = authMode === 'register' ? 'register' : 'login';
+    
+    const [visibleContent, setVisibleContent] = useState(currentMode);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [slideDirection, setSlideDirection] = useState<'slide-left' | 'slide-right'>('slide-right');
+    const [animationPhase, setAnimationPhase] = useState<'pre' | 'mid' | 'post'>('post');
+
+    useEffect(() => {
+        if (!authMode) {
+            navigate('/account/auth/login', { replace: true });
+        } else if (authMode !== 'login' && authMode !== 'register') {
+            navigate('/account/auth/login', { replace: true });
+        }
+
+        if (currentMode !== visibleContent && animationPhase === 'post') {
+            setAnimationPhase('pre');
+            setSlideDirection(
+                (currentMode === 'register') ? 'slide-right' : 'slide-left'
+            );
+            setIsAnimating(true);
+            
+            setTimeout(() => {
+                setAnimationPhase('mid');
+                setVisibleContent(currentMode);
+                
+                setTimeout(() => {
+                    setAnimationPhase('post');
+                    setIsAnimating(false);
+                }, 250);
+            }, 250);
+        }
+    }, [authMode, navigate, currentMode, visibleContent, animationPhase]);
+
+    const handleSwitchMode = () => {
+        if (animationPhase === 'post') {
+            navigate(`/account/auth/${currentMode === 'login' ? 'register' : 'login'}`);
+        }
+    };
+
+    const getAnimationClass = () => {
+        if (!isAnimating) return '';
+        
+        if (animationPhase === 'pre') {
+            return `${slideDirection}-out`;
+        } else if (animationPhase === 'mid' || animationPhase === 'post') {
+            return `${slideDirection}-in`;
+        }
+        return '';
+    };
 
     return (
-        <div className='auth-container'>
-            <div className='auth-form'>
-                <div className='auth-form__header'>
-                    <h2 className='auth-form__title'>
-                        {mode === 'login' ? 'Welcome Back' : 'Create Your Account'}
-                    </h2>
+        <div className="auth-container">
+            <div className="forms-container">
+                <div className={`animated-form ${getAnimationClass()}`}>
+                    {visibleContent === 'login' ? (
+                        <LoginForm onSwitchMode={handleSwitchMode} />
+                    ) : (
+                        <RegisterForm onSwitchMode={handleSwitchMode} />
+                    )}
                 </div>
-                <div className='auth-form__fields'>
-                    <div className={`field-panel ${mode === 'login' ? 'active' : ''}`}>
-                        <TextBox placeholder='Email or Username' />
-                        <TextBox placeholder='Password' isPassword />
-                    </div>
-                    <div className={`field-panel ${mode === 'register' ? 'active' : ''}`}>
-                        <TextBox placeholder='Username' />
-                        <TextBox placeholder='Email' />
-                        <TextBox placeholder='Password' isPassword />
-                    </div>
-                </div>
-                <div className='auth-divider'>or</div>
-                <button className='auth-button' onClick={toggleMode}>
-                    {mode === 'login' ? 'Create Account' : 'Sign In'}
-                </button>
             </div>
-            <div className='auth-hero' />
+            <div className="auth-hero" />
         </div>
     );
 }
