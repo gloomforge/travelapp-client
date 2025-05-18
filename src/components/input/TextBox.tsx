@@ -2,39 +2,56 @@ import React, {useState} from 'react';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
 import './TextBox.css';
 
-const TextBox = ({placeholder = '', isPassword = false}) => {
+interface TextBoxProps {
+    placeholder?: string;
+    isPassword?: boolean;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    error?: string;
+};
+
+const TextBox: React.FC<TextBoxProps> = ({
+    placeholder = '',
+    isPassword = false,
+    value,
+    onChange,
+    error
+}) => {
     const [focused, setFocused] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [value, setValue] = useState('');
-
     const isLabelActive = focused || value !== '';
+    const hasError = !!error;
 
     return (
-        <div className="textbox-container">
+        <div className={`textbox-container ${hasError ? 'has-error' : ''}`}>
             <label
-                className={`floating-label ${isLabelActive ? 'active' : ''}`}>{placeholder}</label>
+                className={`floating-label ${isLabelActive ? 'active' : ''}`}>
+                {placeholder}
+            </label>
             <div className="input-wrapper">
                 <input
                     type={isPassword && !showPassword ? 'password' : 'text'}
                     value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={onChange}
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
-                    className="textbox-input"
+                    className={`textbox-input ${hasError ? 'input-error' : ''}`}
+                    aria-invalid={hasError}
                 />
                 {isPassword && (
                     <button
                         type="button"
                         className="visibility-toggle"
-                        onClick={() => setShowPassword((s) => !s)}
+                        onClick={() => setShowPassword(s => !s)}
                         aria-label="Toggle password visibility"
                     >
-                        {showPassword
-                            ? React.createElement(FaEyeSlash as any, {size: 16})
-                            : React.createElement(FaEye as any, {size: 16})}
+                        <span className="icon">
+                            {showPassword ? FaEyeSlash({size: 16}) : FaEye({size: 16})}
+                        </span>
                     </button>
                 )}
             </div>
+            {hasError && <div className="error-message">{error}</div>}
         </div>
     );
 };

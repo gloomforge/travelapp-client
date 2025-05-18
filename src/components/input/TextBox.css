@@ -10,6 +10,7 @@
     align-items: center;
     border-bottom: 1px solid #ccc;
     width: 100%;
+    transition: border-color 0.2s ease;
 }
 
 .textbox-input {
@@ -46,4 +47,24 @@
     cursor: pointer;
     font-size: 18px;
     padding: 0 10px;
+    color: #666;
+}
+
+.textbox-container.has-error .input-wrapper {
+    border-bottom-color: #e53935;
+}
+
+.textbox-container.has-error .floating-label.active {
+    color: #e53935;
+}
+
+.input-error {
+    color: #e53935;
+}
+
+.error-message {
+    color: #e53935;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 10px;
 }
