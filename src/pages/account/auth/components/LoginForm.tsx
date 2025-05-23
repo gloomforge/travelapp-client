@@ -23,6 +23,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchMode }) => {
         if (errors[field]) {
             setErrors(prev => ({ ...prev, [field]: '' }));
         }
+        if (apiError) {
+            setApiError(null);
+        }
     };
 
     const validateForm = (): boolean => {
@@ -47,13 +50,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchMode }) => {
                 login: form.login,
                 password: form.password
             };
-            const { token } = await authApi.login(payload);
-            
-            localStorage.setItem("token", token);
-            window.dispatchEvent(new Event('storage'));
-            navigate("/dashboard");
+            const response = await authApi.login(payload);
+
+            if (response && response.token) {
+                localStorage.setItem("token", response.token);
+                window.dispatchEvent(new Event('storage'));
+                navigate("/");
+            } else throw new Error("Invalid response from server");
         } catch (err: any) {
-            setApiError(err.response?.data?.message || "An error occurred during authentication");
+            console.error("Login error:", err);
+            setApiError(
+                err.response?.data?.message || 
+                "Unable to login. Please check your credentials or try again later."
+            );
         } finally {
             setIsSubmitting(false);
         }

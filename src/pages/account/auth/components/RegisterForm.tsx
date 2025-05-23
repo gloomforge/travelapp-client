@@ -24,6 +24,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchMode }) => {
         if (errors[field]) {
             setErrors(prev => ({ ...prev, [field]: '' }));
         }
+        if (apiError) {
+            setApiError(null);
+        }
     };
 
     const validateForm = (): boolean => {
@@ -52,13 +55,19 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchMode }) => {
                 email: form.email,
                 password: form.password
             };
-            const { token } = await authApi.register(payload);
+            const response = await authApi.register(payload);
             
-            localStorage.setItem("token", token);
-            window.dispatchEvent(new Event('storage'));
-            navigate("/dashboard");
+            if (response && response.token) {
+                localStorage.setItem("token", response.token);
+                window.dispatchEvent(new Event('storage'));
+                navigate("/");
+            } else throw new Error("Invalid response from server");
         } catch (err: any) {
-            setApiError(err.response?.data?.message || "An error occurred during registration");
+            console.error("Registration error:", err);
+            setApiError(
+                err.response?.data?.message || 
+                "Registration failed. This username or email may already be in use."
+            );
         } finally {
             setIsSubmitting(false);
         }
