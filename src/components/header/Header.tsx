@@ -1,6 +1,7 @@
 import './Header.css';
 import {useEffect, useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
+import UserBadge from "../userBadge/UserBadge";
 
 function Header() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -21,12 +22,6 @@ function Header() {
 
     const handleLoginClick = () => {
         navigate('/account/auth/login');
-    }
-
-    const handleLogoutClick = () => {
-        localStorage.removeItem('token');
-        setIsAuthenticated(false);
-        navigate('/');
     }
 
     return (
@@ -54,7 +49,7 @@ function Header() {
 
                 <div className={'header-actions'}>
                     {isAuthenticated ? (
-                        <button className={'btn-outline'} onClick={handleLogoutClick}>Logout</button>
+                        <UserBadge />
                     ) : (
                         <button className={'btn-outline'} onClick={handleLoginClick}>Login</button>
                     )}
