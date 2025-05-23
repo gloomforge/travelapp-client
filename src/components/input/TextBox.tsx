@@ -8,7 +8,7 @@ interface TextBoxProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     error?: string;
-};
+}
 
 const TextBox: React.FC<TextBoxProps> = ({
     placeholder = '',
