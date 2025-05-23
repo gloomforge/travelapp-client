@@ -76,17 +76,9 @@ const UserBadge: React.FC = () => {
                 className={`user-badge ${isOpen ? 'user-badge--active' : ''}`}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                {user.avatarUrl ? (
-                    <img
-                        src={user.avatarUrl}
-                        alt={`${user.name}'s profile`}
-                        className="user-badge__avatar"
-                    />
-                ) : (
-                    <div className="user-badge__initials">
-                        {getInitials(user.name)}
-                    </div>
-                )}
+                <div className="user-badge__initials">
+                    {getInitials(user.name)}
+                </div>
                 <div className="user-badge__info">
                     <span className="user-badge__name">{user.name}</span>
                 </div>
