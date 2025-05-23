@@ -1,0 +1,70 @@
+.textbox-container {
+    position: relative;
+    width: 100%;
+    font-family: sans-serif;
+    margin-top: 16px;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    transition: border-color 0.2s ease;
+}
+
+.textbox-input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 14px 10px 6px 10px;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.floating-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 16px;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.floating-label.active {
+    top: -10px;
+    font-size: 12px;
+    color: #666;
+}
+
+.visibility-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 10px;
+    color: #666;
+}
+
+.textbox-container.has-error .input-wrapper {
+    border-bottom-color: #e53935;
+}
+
+.textbox-container.has-error .floating-label.active {
+    color: #e53935;
+}
+
+.input-error {
+    color: #e53935;
+}
+
+.error-message {
+    color: #e53935;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 10px;
+}
