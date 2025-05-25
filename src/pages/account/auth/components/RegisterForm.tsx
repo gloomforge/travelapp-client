@@ -59,6 +59,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchMode }) => {
             
             if (response && response.token) {
                 localStorage.setItem("token", response.token);
+                localStorage.setItem("refreshToken", response.refreshToken);
                 window.dispatchEvent(new Event('storage'));
                 navigate("/");
             } else throw new Error("Invalid response from server");
