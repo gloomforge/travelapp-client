@@ -29,7 +29,7 @@ function Header() {
             <div className={'header-container'}>
                 <div className={'header-left__container'}>
                     <Link to={'/'} className={'logo'}>
-                        <img src={'/logo.svg'} alt={'Travel Journal'} />
+                        <p>Travel Journal</p>
                     </Link>
 
                     <nav className={'header-nav'} aria-label={'main menu'}>
