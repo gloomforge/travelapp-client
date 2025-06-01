@@ -1,10 +1,13 @@
 import './Home.css'
+import FirstSection from "./components/FirstSection";
+import SecondSection from "./components/SecondSection";
 
 function Home() {
     return (
-        <>
-            home page
-        </>
+        <div className={'home-container'}>
+            <FirstSection/>
+            <SecondSection/>
+        </div>
     );
 }
 
