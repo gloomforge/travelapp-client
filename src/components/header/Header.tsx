@@ -35,13 +35,10 @@ function Header() {
                     <nav className={'header-nav'} aria-label={'main menu'}>
                         <ul>
                             <li>
-                                <Link to={'/explore'}>Explore</Link>
+                                <Link to={'/trip-list'}>Explore</Link>
                             </li>
                             <li>
-                                <Link to={'/create'}>Create</Link>
-                            </li>
-                            <li>
-                                <Link to={'/inspire'}>Inspire</Link>
+                                <Link to={'/create-trip'}>Create</Link>
                             </li>
                         </ul>
                     </nav>
