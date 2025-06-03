@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import UserBadge from "../userBadge/UserBadge";
 
-function Header() {
+const Header = ()=> {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ function Header() {
                     <nav className={'header-nav'} aria-label={'main menu'}>
                         <ul>
                             <li>
-                                <Link to={'/trip-list'}>Explore</Link>
+                                <Link to={'/list-journal'}>Explore</Link>
                             </li>
                             <li>
                                 <Link to={'/create-trip'}>Create</Link>
