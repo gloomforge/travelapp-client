@@ -1,6 +1,6 @@
-import { useState, FormEvent } from "react";
-import { TripApi } from "../../api/TripApi";
-import { RouteData } from "../../models/input/CreateRouteRequest";
+import React, { useState, FormEvent } from "react";
+import { TripApi } from "../../../api/TripApi";
+import { RouteData } from "../../../models/input/CreateRouteRequest";
 import TripForm from "./components/TripForm";
 import RouteForm from "./components/RouteForm";
 import "./CreateJournal.css";

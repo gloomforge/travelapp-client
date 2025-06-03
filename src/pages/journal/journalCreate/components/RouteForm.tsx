@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteData } from '../../../models/input/CreateRouteRequest';
+import { RouteData } from '../../../../models/input/CreateRouteRequest';
 
 interface RouteFormProps {
     routes: RouteData[];
