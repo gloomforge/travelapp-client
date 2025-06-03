@@ -1,24 +1,9 @@
-import axios from 'axios';
+import axiosInstance from '../config/AxiosConfig';
 import UserResponse from '../models/output/UserResponse';
-import {API_URL} from "../config/BaseUrl";
 
-class UserApi {
-    async getMe(): Promise<UserResponse> {
-        const token = localStorage.getItem('token');
-        
-        if (!token) {
-            throw new Error('Authentication token not found');
-        }
-        
-        const { data } = await axios.get<UserResponse>(`${API_URL}/user/me`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        
+export class UserApi {
+    static async getMe(): Promise<UserResponse> {
+        const { data } = await axiosInstance.get<UserResponse>(`/user/me`);
         return data;
     }
 }
-
-// eslint-disable-next-line import/no-anonymous-default-export
-export default new UserApi();

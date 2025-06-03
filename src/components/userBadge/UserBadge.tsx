@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './UserBadge.css';
-import userApi from '../../api/UserApi';
+import { UserApi } from '../../api/UserApi';
 import UserResponse from '../../models/output/UserResponse';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ const UserBadge: React.FC = () => {
         const fetchUserData = async () => {
             try {
                 setLoading(true);
-                const userData = await userApi.getMe();
+                const userData = await UserApi.getMe();
                 setUser(userData);
                 setError(null);
             } catch (err: any) {
@@ -49,6 +49,7 @@ const UserBadge: React.FC = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
         window.dispatchEvent(new Event('storage'));
         setIsOpen(false);
         navigate('/');
@@ -76,9 +77,9 @@ const UserBadge: React.FC = () => {
                 className={`user-badge ${isOpen ? 'user-badge--active' : ''}`}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <div className="user-badge__initials">
-                    {getInitials(user.name)}
-                </div>
+                    <div className="user-badge__initials">
+                        {getInitials(user.name)}
+                    </div>
                 <div className="user-badge__info">
                     <span className="user-badge__name">{user.name}</span>
                 </div>

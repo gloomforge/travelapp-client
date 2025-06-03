@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TextBox from '../../../../components/input/TextBox';
 import LoginRequest from '../../../../models/input/LoginRequest';
-import authApi from '../../../../api/AuthApi';
+import { AuthApi } from '../../../../api/AuthApi';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginFormProps {
@@ -50,10 +50,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchMode }) => {
                 login: form.login,
                 password: form.password
             };
-            const response = await authApi.login(payload);
+            const response = await AuthApi.login(payload);
 
             if (response && response.token) {
                 localStorage.setItem("token", response.token);
+                localStorage.setItem("refreshToken", response.refreshToken);
                 window.dispatchEvent(new Event('storage'));
                 navigate("/");
             } else throw new Error("Invalid response from server");

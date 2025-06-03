@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TextBox from '../../../../components/input/TextBox';
 import RegisterRequest from '../../../../models/input/RegisterRequest';
-import authApi from '../../../../api/AuthApi';
+import { AuthApi } from '../../../../api/AuthApi';
 import { useNavigate } from 'react-router-dom';
 
 interface RegisterFormProps {
@@ -55,10 +55,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchMode }) => {
                 email: form.email,
                 password: form.password
             };
-            const response = await authApi.register(payload);
+            const response = await AuthApi.register(payload);
             
             if (response && response.token) {
                 localStorage.setItem("token", response.token);
+                localStorage.setItem("refreshToken", response.refreshToken);
                 window.dispatchEvent(new Event('storage'));
                 navigate("/");
             } else throw new Error("Invalid response from server");

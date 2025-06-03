@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import UserBadge from "../userBadge/UserBadge";
 
-function Header() {
+const Header = ()=> {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
 
@@ -29,19 +29,16 @@ function Header() {
             <div className={'header-container'}>
                 <div className={'header-left__container'}>
                     <Link to={'/'} className={'logo'}>
-                        <img src={'/logo.svg'} alt={'Travel Journal'} />
+                        <p>Travel Journal</p>
                     </Link>
 
                     <nav className={'header-nav'} aria-label={'main menu'}>
                         <ul>
                             <li>
-                                <Link to={'/explore'}>Explore</Link>
+                                <Link to={'/list-journal'}>Explore</Link>
                             </li>
                             <li>
-                                <Link to={'/create'}>Create</Link>
-                            </li>
-                            <li>
-                                <Link to={'/inspire'}>Inspire</Link>
+                                <Link to={'/create-trip'}>Create</Link>
                             </li>
                         </ul>
                     </nav>

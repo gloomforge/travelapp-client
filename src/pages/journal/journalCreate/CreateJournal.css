@@ -1,0 +1,182 @@
+.create-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.trip-details,
+.route-management {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    font-weight: 600;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    background-color: white;
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+}
+
+.date-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-textarea {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.route-container {
+    background-color: #f8fafc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.route-container:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.route-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.route-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.route-fields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+.route-field {
+    flex: 1;
+}
+
+.button-base {
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-route-button {
+    composes: button-base;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 0.5rem 1rem;
+}
+
+.remove-route-button:hover {
+    background-color: #fecaca;
+}
+
+.add-route-button {
+    composes: button-base;
+    cursor: pointer;
+    background-color: #f0f9ff;
+    color: #4a90e2;
+    padding: 0.75rem 1.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    border: 1px dashed #4a90e2;
+}
+
+.add-route-button:hover {
+    background-color: #e0f2fe;
+}
+
+.submit-button {
+    composes: button-base;
+    cursor: pointer;
+    border: none;
+    border-radius: 14px;
+    background-color: #ffb800;
+    color: black;
+    padding: 0.875rem 2rem;
+    width: 100%;
+    margin-top: 2rem;
+    font-size: 1rem;
+    transition: background-color 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.submit-button:hover {
+    background-color: #e6a800;
+    transform: translateY(-5px);
+}
+
+.submit-button:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
