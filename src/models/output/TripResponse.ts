@@ -1,4 +1,4 @@
-import { RouteData } from "../input/CreateRouteRequest";
+import RouteResponse from './RouteResponse';
 
 interface TripResponse {
     id: number;
@@ -7,7 +7,7 @@ interface TripResponse {
     startDate: string;
     endDate: string;
     userId: number;
-    routes: RouteData[];
+    routes?: RouteResponse[];
 }
 
 export default TripResponse;
