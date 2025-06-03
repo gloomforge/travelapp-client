@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './UserBadge.css';
-import userApi from '../../api/UserApi';
+import { UserApi } from '../../api/UserApi';
 import UserResponse from '../../models/output/UserResponse';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ const UserBadge: React.FC = () => {
         const fetchUserData = async () => {
             try {
                 setLoading(true);
-                const userData = await userApi.getMe();
+                const userData = await UserApi.getMe();
                 setUser(userData);
                 setError(null);
             } catch (err: any) {
