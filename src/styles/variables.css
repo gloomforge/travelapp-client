@@ -1,0 +1,51 @@
+:root {
+  /* Colors */
+  --color-primary: #f29426;
+  --color-primary-light: #fba41e;
+  --color-primary-dark: #fba41e;
+  
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
+  
+  --color-text: #1e293b;
+  --color-text-light: #64748b;
+  --color-text-inverse: #ffffff;
+  
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 999px;
+  
+  /* Typography */
+  --font-family: 'Lexend Deca', system-ui, -apple-system, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Layout */
+  --container-max-width: 1200px;
+  --header-height: 4rem;
+  --footer-height: 3rem;
+} 

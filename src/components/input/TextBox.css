@@ -1,70 +1,88 @@
 .textbox-container {
     position: relative;
     width: 100%;
-    font-family: sans-serif;
-    margin-top: 16px;
-}
-
-.input-wrapper {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #ccc;
-    width: 100%;
-    transition: border-color 0.2s ease;
+    margin-bottom: var(--spacing-sm);
 }
 
 .textbox-input {
-    flex: 1;
     width: 100%;
-    border: none;
+    padding: var(--spacing-sm);
+    padding-top: calc(var(--spacing-sm) + 8px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-background);
+    transition: border-color 0.2s ease;
+    font-size: var(--font-size-md);
+    height: 48px;
+}
+
+.textbox-input:focus {
     outline: none;
-    font-size: 16px;
-    padding: 14px 10px 6px 10px;
-    background: transparent;
-    box-sizing: border-box;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(242, 148, 38, 0.1);
+}
+
+.textbox-input.with-password-toggle {
+    padding-right: 2.5rem;
 }
 
 .floating-label {
     position: absolute;
     top: 50%;
-    left: 10px;
+    left: var(--spacing-sm);
     transform: translateY(-50%);
-    color: #999;
-    font-size: 16px;
+    color: var(--color-text-light);
+    font-size: var(--font-size-md);
     pointer-events: none;
     transition: all 0.2s ease;
+    background-color: transparent;
+    padding: 0 4px;
+    margin-left: -2px;
 }
 
 .floating-label.active {
-    top: -10px;
-    font-size: 12px;
-    color: #666;
+    top: 0;
+    transform: translateY(-50%);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+    background-color: var(--color-background);
+    z-index: 1;
 }
 
-.visibility-toggle {
+.textbox-password-toggle {
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 18px;
-    padding: 0 10px;
-    color: #666;
+    color: var(--color-text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xs);
 }
 
-.textbox-container.has-error .input-wrapper {
-    border-bottom-color: #e53935;
+.textbox-password-toggle:hover {
+    color: var(--color-text);
+}
+
+.textbox-container.has-error .textbox-input {
+    border-color: var(--color-error);
 }
 
 .textbox-container.has-error .floating-label.active {
-    color: #e53935;
+    color: var(--color-error);
 }
 
-.input-error {
-    color: #e53935;
+.textbox-error-message {
+    color: var(--color-error);
+    font-size: var(--font-size-xs);
+    margin-top: var(--spacing-xs);
 }
 
-.error-message {
-    color: #e53935;
-    font-size: 12px;
-    margin-top: 4px;
-    margin-left: 10px;
+.textbox-relative-wrapper {
+    position: relative;
+    width: 100%;
 }

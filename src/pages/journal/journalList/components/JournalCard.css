@@ -1,89 +1,105 @@
 .journal-card {
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    overflow: hidden;
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  position: relative;
 }
 
 .journal-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-    border-color: rgba(9, 132, 227, 0.2);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.journal-card:hover::after {
+  opacity: 1;
+}
+
+.journal-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .journal-card-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
 
-.journal-card h2 {
-    font-size: 1.375rem;
-    font-weight: 600;
-    color: #2d3436;
-    margin: 0 0 1rem 0;
-    line-height: 1.3;
+.journal-card-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
 }
 
-.journal-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+.journal-card-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
-.meta-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: #636e72;
+.journal-card-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
 }
 
-.meta-icon {
-    color: #0984e3;
-    font-size: 1rem;
+.journal-card-icon {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.meta-item.locations {
-    flex-wrap: wrap;
+.journal-card-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.trip-description {
-    color: #636e72;
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    margin: 0 0 1.5rem 0;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    flex-grow: 1;
+.journal-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
 }
 
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+.journal-card-destinations {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
 }
 
-.route-count {
-    font-size: 0.875rem;
-    color: #0984e3;
-    font-weight: 500;
+.journal-card-chevron {
+  color: var(--color-primary);
+  transition: transform 0.3s ease;
 }
 
-.chevron-icon {
-    color: #0984e3;
-    font-size: 0.875rem;
-    transition: transform 0.2s ease;
+.journal-card:hover .journal-card-chevron {
+  transform: translateX(4px);
 }
 
-.journal-card:hover .chevron-icon {
-    transform: translateX(4px);
-}
+.journal-card-cities {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+} 

@@ -56,7 +56,7 @@ const UserBadge: React.FC = () => {
     };
 
     if (loading) {
-        return <div className="user-badge user-badge--loading">Loading...</div>;
+        return <div className="user-badge--loading">Loading...</div>;
     }
 
     if (error || !user) {
@@ -77,11 +77,11 @@ const UserBadge: React.FC = () => {
                 className={`user-badge ${isOpen ? 'user-badge--active' : ''}`}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                    <div className="user-badge__initials">
-                        {getInitials(user.name)}
-                    </div>
+                <div className="user-badge__initials">
+                    {getInitials(user.name)}
+                </div>
                 <div className="user-badge__info">
-                    <span className="user-badge__name">{user.name}</span>
+                    <span className="user-badge__name" data-text={user.name}>{user.name}</span>
                 </div>
             </div>
 

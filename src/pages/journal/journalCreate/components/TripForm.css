@@ -1,0 +1,48 @@
+.trip-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.trip-form-header {
+  margin-bottom: var(--spacing-xs);
+}
+
+.trip-form-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+}
+
+.trip-form-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+.trip-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.trip-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.trip-form-label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.trip-form-date-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.trip-form-textarea {
+  min-height: 120px;
+  resize: vertical;
+} 

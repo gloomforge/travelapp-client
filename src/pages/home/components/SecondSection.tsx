@@ -1,4 +1,4 @@
-import './SecondSection.css';
+import "./SecondSection.css";
 
 type CardContainerProps = {
     image: string;
