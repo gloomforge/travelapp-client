@@ -5,18 +5,19 @@
 .user-badge {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem;
-    border-radius: 2rem;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full, 999px);
     text-decoration: none;
     color: inherit;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.7s ease;
     cursor: pointer;
+    background-color: transparent;
 }
 
 .user-badge:hover,
 .user-badge--active {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--color-surface);
 }
 
 .user-badge__avatar,
@@ -32,67 +33,97 @@
 }
 
 .user-badge__initials {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffb800;
-    color: #fff;
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: var(--font-size-xs);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.user-badge:hover .user-badge__initials {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb, 242, 148, 38), 0.2);
 }
 
 .user-badge__info {
     display: flex;
     flex-direction: column;
+    transition: transform 0.5s ease;
 }
 
 .user-badge__name {
     font-weight: 500;
-    font-size: 0.9rem;
-    color: #333;
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    transition: color 0.5s ease;
+}
+
+.user-badge:hover .user-badge__name {
+    color: var(--color-primary);
+}
+
+.user-badge__name::before {
+    content: attr(data-text);
+    position: absolute;
+    color: var(--color-primary);
+    width: 0;
+    overflow: hidden;
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    white-space: nowrap;
+}
+
+.user-badge:hover .user-badge__name::before {
+    width: 100%;
 }
 
 .user-badge--loading {
     opacity: 0.7;
-    font-size: 0.9rem;
-    color: #777;
-    cursor: default;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
 }
 
 .user-badge__dropdown {
     position: absolute;
-    top: calc(100% + 0.25rem);
+    top: calc(100% + var(--spacing-xs));
     right: 0;
-    background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    min-width: 16rem;
-    z-index: 10;
+    background-color: var(--color-background);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    min-width: 12rem;
+    z-index: 110;
     overflow: hidden;
-    animation: fadeIn 0.2s ease-in-out;
+    animation: fadeIn 0.4s ease;
+    border: 1px solid var(--color-border);
 }
 
 @keyframes fadeIn {
-    from {
+    0% {
         opacity: 0;
-        transform: translateY(-5px);
+        transform: translateY(-8px);
     }
-    to {
+    100% {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
 .user-badge__dropdown-item {
-    padding: 0.75rem 1rem;
+    padding: var(--spacing-md);
     width: 100%;
     text-align: left;
+    transition: background-color 0.5s ease;
 }
 
 .user-badge__email {
-    font-size: 0.9rem;
-    color: #555;
-    border-bottom: 1px solid #eee;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+    border-bottom: 1px solid var(--color-border);
     word-break: break-all;
 }
 
@@ -100,12 +131,94 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #e53935;
+    color: var(--color-error);
     font-weight: 500;
-    transition: background-color 0.2s ease;
-    font-size: 0.9rem;
+    transition: all 0.4s ease;
+    font-size: var(--font-size-sm);
+    position: relative;
+    overflow: hidden;
+    padding-left: calc(var(--spacing-md) + 5px);
+}
+
+.user-badge__logout-btn::before {
+    content: "›";
+    position: absolute;
+    left: var(--spacing-md);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s ease;
 }
 
 .user-badge__logout-btn:hover {
-    background-color: rgba(229, 57, 53, 0.05);
+    background-color: rgba(var(--color-error-rgb, 229, 57, 53), 0.08);
+    padding-left: calc(var(--spacing-md) + 15px);
+}
+
+.user-badge__logout-btn:hover::before {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+    /* Стили для UserBadge в мобильном меню */
+    .mobile-user-badge .user-badge {
+        padding: var(--spacing-md);
+        border-radius: var(--radius-md);
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .mobile-user-badge .user-badge__initials {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: var(--font-size-sm);
+    }
+    
+    .mobile-user-badge .user-badge__name {
+        font-size: var(--font-size-md);
+    }
+    
+    .mobile-user-badge .user-badge__dropdown {
+        position: static;
+        margin-top: var(--spacing-sm);
+        width: 100%;
+        box-shadow: none;
+        border-radius: var(--radius-md);
+        animation: none;
+    }
+    
+    .mobile-user-badge .user-badge__dropdown-item {
+        padding: var(--spacing-md);
+    }
+    
+    .mobile-user-badge .user-badge__logout-btn {
+        font-size: var(--font-size-md);
+        padding: var(--spacing-md);
+        padding-left: calc(var(--spacing-md) + 15px);
+        border-radius: var(--radius-md);
+    }
+    
+    .mobile-user-badge .user-badge__logout-btn::before {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    /* Стили для UserBadge в шапке на мобильных */
+    .header-actions .user-badge {
+        padding: var(--spacing-xs);
+    }
+    
+    .header-actions .user-badge__info {
+        display: none;
+    }
+    
+    .header-actions .user-badge__initials {
+        margin: 0;
+    }
+    
+    .header-actions .user-badge__dropdown {
+        right: -10px;
+        min-width: 200px;
+    }
 }

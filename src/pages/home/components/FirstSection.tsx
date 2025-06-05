@@ -1,4 +1,5 @@
-import './FirstSection.css';
+import "./FirstSection.css";
+import { Link } from "react-router-dom";
 
 const FirstSection = () => {
     return (
@@ -9,12 +10,16 @@ const FirstSection = () => {
                     Capture every moment of your journey, from breathtaking sunsets to bustling city streets, and
                     seamlessly weave them into a personalized online travel journal.
                 </p>
-                <button className="welcome-cards-left__button">
+                <Link to="/create-trip" className="welcome-cards-left__button">
                     Start your journal now <span className="arrow">→</span>
-                </button>
+                </Link>
             </div>
             <div className="welcome-cards-right">
-                <img src="/images/first-section-card.jpg" alt="App preview" />
+                <img 
+                    src="/images/first-section-card.jpg" 
+                    alt="Travel journal app preview" 
+                    loading="eager"
+                />
             </div>
         </section>
     );

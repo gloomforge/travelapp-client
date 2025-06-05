@@ -88,22 +88,36 @@ const CreateJournal = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="create-container">
-            <TripForm
-                title={formData.title}
-                description={formData.description}
-                startDate={formData.startDate}
-                endDate={formData.endDate}
-                onInputChange={handleInputChange}
-            />
-            <RouteForm
-                routes={formData.routes}
-                onRouteChange={handleRouteChange}
-                onAddRoute={addRoute}
-                onRemoveRoute={removeRoute}
-                isSubmitting={isSubmitting}
-            />
-        </form>
+        <div className="create-journal-container">
+            <div className="create-journal-form-wrapper">
+                <div className="create-journal-header">
+                    <h1 className="create-journal-title">Create New Travel Journal</h1>
+                    <p className="create-journal-subtitle">Document your journey and share your experiences</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="create-journal-form">
+                    <div className="card">
+                        <TripForm
+                            title={formData.title}
+                            description={formData.description}
+                            startDate={formData.startDate}
+                            endDate={formData.endDate}
+                            onInputChange={handleInputChange}
+                        />
+                    </div>
+
+                    <div className="card">
+                        <RouteForm
+                            routes={formData.routes}
+                            onRouteChange={handleRouteChange}
+                            onAddRoute={addRoute}
+                            onRemoveRoute={removeRoute}
+                            isSubmitting={isSubmitting}
+                        />
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 };
 

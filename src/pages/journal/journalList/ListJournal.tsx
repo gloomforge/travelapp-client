@@ -1,17 +1,18 @@
-import "./ListJournal.css";
 import { useState, useEffect } from "react";
 import { TripApi } from "../../../api/TripApi";
 import { RouteApi } from "../../../api/RouteApi";
 import JournalCard from "./components/JournalCard";
 import JournalItem from "../journalItem/JournalItem";
 import TripResponse from "../../../models/output/TripResponse";
+import { Link } from "react-router-dom";
+import "./ListJournal.css";
 
 const ListJournal = () => {
     const [trips, setTrips] = useState<TripResponse[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedTrip, setSelectedTrip] = useState<TripResponse | null>(null);
-
+    
     useEffect(() => {
         const fetchTripsAndRoutes = async () => {
             try {
@@ -52,11 +53,6 @@ const ListJournal = () => {
         fetchTripsAndRoutes();
     }, []);
 
-    const handleCreateTrip = () => {
-        // TODO: Implement navigation to create trip page
-        console.log('Navigate to create trip page');
-    };
-
     const handleTripClick = (trip: TripResponse) => {
         setSelectedTrip(trip);
     };
@@ -68,7 +64,9 @@ const ListJournal = () => {
     if (loading) {
         return (
             <div className="journal-list-container">
-                <div className="loading-state">Loading trips...</div>
+                <div className="journal-list-loading">
+                    <p className="journal-list-loading-text">Loading trips...</p>
+                </div>
             </div>
         );
     }
@@ -76,33 +74,49 @@ const ListJournal = () => {
     if (error) {
         return (
             <div className="journal-list-container">
-                <div className="error-state">{error}</div>
+                <div className="journal-list-error">
+                    <div className="journal-list-error-container">
+                        <p className="journal-list-error-text">{error}</p>
+                        <Link to="/account/auth/login" className="btn btn-primary">
+                            Sign In
+                        </Link>
+                    </div>
+                </div>
             </div>
         );
     }
 
     return (
         <div className="journal-list-container">
-            <header className="journal-header">
-                <h1>Travel Journals</h1>
-                <button className="new-journal-btn" onClick={handleCreateTrip}>
-                    New Journal
-                </button>
-            </header>
-            <div className="journals-grid">
-                {trips.map((trip) => (
-                    <JournalCard 
-                        key={trip.id} 
-                        trip={trip} 
-                        onClick={() => handleTripClick(trip)}
-                    />
-                ))}
+            <div className="journal-list-header">
+                <div>
+                    <h1 className="journal-list-title">My travel journals</h1>
+                    <p className="journal-list-subtitle">Your collection of travel memories</p>
+                </div>
+                <Link to="/create" className="btn btn-primary journal-list-new-button">
+                    <span className="journal-list-plus-icon">+</span> New Journal
+                </Link>
             </div>
-            {trips.length === 0 && (
-                <div className="empty-state">
-                    No travel journals found. Create your first journal!
+
+            {trips.length > 0 ? (
+                <div className="journal-list-grid">
+                    {trips.map((trip) => (
+                        <JournalCard 
+                            key={trip.id} 
+                            trip={trip} 
+                            onClick={() => handleTripClick(trip)}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className="journal-list-empty">
+                    <p className="journal-list-empty-text">No travel journals found. Create your first journal!</p>
+                    <Link to="/create" className="btn btn-primary journal-list-new-button">
+                        <span className="journal-list-plus-icon">+</span> Create Journal
+                    </Link>
                 </div>
             )}
+
             {selectedTrip && (
                 <JournalItem
                     trip={selectedTrip}

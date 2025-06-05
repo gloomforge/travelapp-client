@@ -1,57 +1,77 @@
-import React, {useState} from 'react';
-import {FaEye, FaEyeSlash} from 'react-icons/fa';
+import React, { useState, InputHTMLAttributes, ComponentType, useEffect } from 'react';
+import { IconBaseProps } from 'react-icons';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './TextBox.css';
 
-interface TextBoxProps {
+interface TextBoxProps extends InputHTMLAttributes<HTMLInputElement> {
     placeholder?: string;
-    isPassword?: boolean;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     error?: string;
+    isPassword?: boolean;
 }
 
 const TextBox: React.FC<TextBoxProps> = ({
     placeholder = '',
+    error,
     isPassword = false,
-    value,
-    onChange,
-    error
+    className = '',
+    ...props
 }) => {
     const [focused, setFocused] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const isLabelActive = focused || value !== '';
+    const [hasValue, setHasValue] = useState(!!props.value);
+    const isLabelActive = focused || hasValue;
     const hasError = !!error;
+
+    useEffect(() => {
+        setHasValue(!!props.value);
+    }, [props.value]);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setHasValue(!!e.target.value);
+        if (props.onChange) {
+            props.onChange(e);
+        }
+    };
+
+    const Icon = (showPassword ? FaEyeSlash : FaEye) as ComponentType<IconBaseProps>;
 
     return (
         <div className={`textbox-container ${hasError ? 'has-error' : ''}`}>
-            <label
-                className={`floating-label ${isLabelActive ? 'active' : ''}`}>
-                {placeholder}
-            </label>
-            <div className="input-wrapper">
+            <div className="textbox-relative-wrapper">
                 <input
+                    {...props}
                     type={isPassword && !showPassword ? 'password' : 'text'}
-                    value={value}
-                    onChange={onChange}
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
-                    className={`textbox-input ${hasError ? 'input-error' : ''}`}
+                    onChange={handleChange}
+                    className={`textbox-input ${isPassword ? 'with-password-toggle' : ''} ${className}`}
                     aria-invalid={hasError}
+                    placeholder=""
                 />
+                <label
+                    className={`floating-label ${isLabelActive ? 'active' : ''}`}>
+                    {placeholder}
+                </label>
                 {isPassword && (
                     <button
                         type="button"
-                        className="visibility-toggle"
-                        onClick={() => setShowPassword(s => !s)}
+                        onClick={togglePasswordVisibility}
+                        className="textbox-password-toggle"
                         aria-label="Toggle password visibility"
                     >
-                        <span className="icon">
-                            {showPassword ? FaEyeSlash({size: 16}) : FaEye({size: 16})}
-                        </span>
+                        <Icon size={16} />
                     </button>
                 )}
             </div>
-            {hasError && <div className="error-message">{error}</div>}
+            {error && (
+                <div className="textbox-error-message">
+                    {error}
+                </div>
+            )}
         </div>
     );
 };

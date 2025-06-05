@@ -1,66 +1,97 @@
 .second-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5rem;
-    padding: 5rem 2rem;
-    max-width: 1300px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+  padding: 5rem 2rem;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
 }
 
 .card-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
 .card-container.reverse {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.card-container__image {
+  flex: 1;
+  min-width: 300px;
 }
 
 .card-container__image img {
-    width: 500px;
-    max-width: 100%;
-    height: auto;
-    border-radius: 1rem;
-    object-fit: cover;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  box-shadow: var(--shadow-md);
 }
 
 .card-container__info {
-    max-width: 600px;
+  flex: 1;
+  min-width: 300px;
 }
 
 .card-container__subtitle {
-    color: #f29426;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.03em;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
 }
 
 .card-container__title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
 }
 
 .card-container__list {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 1.5rem;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.card-container__list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .card-container__list li::before {
-    content: '✔';
-    color: black;
-    margin-right: 0.5rem;
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+  margin-right: 0.5rem;
 }
 
 .card-container__desc {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    color: #333;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: var(--color-text-light);
 }
+
+@media (max-width: 992px) {
+  .card-container,
+  .card-container.reverse {
+    flex-direction: column;
+  }
+  
+  .card-container__image {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .card-container__title {
+    font-size: 2rem;
+  }
+} 

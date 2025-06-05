@@ -1,42 +1,43 @@
-import React, { useState } from 'react';
+import './AuthForms.css';
+import React from 'react';
 import TextBox from '../../../../components/input/TextBox';
 import RegisterRequest from '../../../../models/input/RegisterRequest';
 import { AuthApi } from '../../../../api/AuthApi';
 import { useNavigate } from 'react-router-dom';
+import useAuthForm from '../../../../hooks/useAuthForm';
 
 interface RegisterFormProps {
     onSwitchMode: () => void;
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchMode }) => {
-    const [form, setForm] = useState({
-        name: '',
-        email: '',
-        password: ''
+    const { 
+        form, 
+        errors, 
+        isSubmitting, 
+        apiError, 
+        handleChange, 
+        setErrors, 
+        setIsSubmitting, 
+        setApiError 
+    } = useAuthForm({
+        initialValues: {
+            name: '',
+            email: '',
+            password: ''
+        }
     });
-    const [errors, setErrors] = useState<Record<string, string>>({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [apiError, setApiError] = useState<string | null>(null);
+    
     const navigate = useNavigate();
-
-    const handleChange = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm((f) => ({ ...f, [field]: e.target.value }));
-        if (errors[field]) {
-            setErrors(prev => ({ ...prev, [field]: '' }));
-        }
-        if (apiError) {
-            setApiError(null);
-        }
-    };
 
     const validateForm = (): boolean => {
         const newErrors: Record<string, string> = {};
         
-        if (!form.name.trim()) newErrors.name = "Username is required";
-        if (!form.email.trim()) newErrors.email = "Email is required";
-        else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Email is invalid";
-        if (!form.password) newErrors.password = "Password is required";
-        else if (form.password.length < 6) newErrors.password = "Password must be at least 6 characters";
+        if (!form.name.trim()) newErrors.name = "Required";
+        if (!form.email.trim()) newErrors.email = "Required";
+        else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Invalid email";
+        if (!form.password) newErrors.password = "Required";
+        else if (form.password.length < 6) newErrors.password = "Min 6 characters";
         
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -62,12 +63,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchMode }) => {
                 localStorage.setItem("refreshToken", response.refreshToken);
                 window.dispatchEvent(new Event('storage'));
                 navigate("/");
-            } else throw new Error("Invalid response from server");
+            } else {
+                setApiError("Invalid response from server");
+            }
         } catch (err: any) {
             console.error("Registration error:", err);
             setApiError(
                 err.response?.data?.message || 
-                "Registration failed. This username or email may already be in use."
+                "Registration failed. This username or email may be taken."
             );
         } finally {
             setIsSubmitting(false);
@@ -75,43 +78,71 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchMode }) => {
     };
 
     return (
-        <form className="auth-form" onSubmit={handleSubmit}>
-            <h2 className="auth-form__title">Create Your Account</h2>
-            <div className="auth-form__fields">
-                <TextBox
-                    placeholder="Username"
-                    value={form.name}
-                    onChange={handleChange("name")}
-                    error={errors.name}
-                />
-                <TextBox
-                    placeholder="Email"
-                    value={form.email}
-                    onChange={handleChange("email")}
-                    error={errors.email}
-                />
-                <TextBox
-                    placeholder="Password"
-                    isPassword
-                    value={form.password}
-                    onChange={handleChange("password")}
-                    error={errors.password}
-                />
+        <div className="auth-form">
+            <h2 className="auth-form-title">Join Us Today</h2>
+            <p className="auth-form-subtitle">Create your account</p>
+            
+            <form onSubmit={handleSubmit}>
+                <div className="auth-form-group">
+                    <TextBox
+                        placeholder="Username"
+                        value={form.name}
+                        onChange={handleChange("name")}
+                        error={errors.name}
+                        className="auth-form-input"
+                        autoComplete="username"
+                    />
+                </div>
+                
+                <div className="auth-form-group">
+                    <TextBox
+                        placeholder="Email"
+                        value={form.email}
+                        onChange={handleChange("email")}
+                        error={errors.email}
+                        className="auth-form-input"
+                        autoComplete="email"
+                        type="email"
+                    />
+                </div>
+                
+                <div className="auth-form-group">
+                    <TextBox
+                        placeholder="Password"
+                        isPassword
+                        value={form.password}
+                        onChange={handleChange("password")}
+                        error={errors.password}
+                        className="auth-form-input"
+                        autoComplete="new-password"
+                    />
+                </div>
+                
+                {apiError && (
+                    <div className="auth-form-error">
+                        {apiError}
+                    </div>
+                )}
+                
+                <button 
+                    className="auth-form-button" 
+                    type="submit" 
+                    disabled={isSubmitting}
+                >
+                    {isSubmitting ? "Creating..." : "Create Account"}
+                </button>
+            </form>
+            
+            <div className="auth-form-footer">
+                Have an account?
+                <span 
+                    className="auth-form-link" 
+                    onClick={onSwitchMode}
+                >
+                    {" Sign in"}
+                </span>
             </div>
-            {apiError && <div className="auth-error">{apiError}</div>}
-            <button className="auth-button" style={{marginTop: "2rem"}} type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Processing..." : "Create Account"}
-            </button>
-            <div className="auth-divider">or</div>
-            <button
-                type="button"
-                className="auth-toggle"
-                onClick={onSwitchMode}
-                disabled={isSubmitting}
-            >
-                Already have an account? Login ...
-            </button>
-        </form>
+        </div>
     );
 };
 
